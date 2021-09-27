@@ -5,6 +5,7 @@ class Rect {
         this.passo = 15;
         this.h = 15;
         this.w = this.minimo + this.passo * this.indice;
+        this.div = null;
         this.from = null;
         this.torre = null;
         this.velocidade = opt.velocidade;
@@ -20,7 +21,7 @@ class Rect {
             opacidade : opacidade,
             width : this.w + "px",
             height : this.h + 'px',
-            left : "600px",
+            left : "100px",
             top : 100 + this.indice * 10 + "px",
             borderRadius : "2px",
             marginLeft : -(this.minimo + this.passo * this.indice) / 2 + "px",
@@ -106,14 +107,10 @@ class Torre {
 }
 
 async function main(n, opt) {
-    var rects = [];
-    var torres = [];
-    var i = 0;
     const TOTAL_TORRES = 3;
-    
-    for (i = 0; i < n; i++) {
-        rects.push(new Rect(i, {}));
-    }
+    var torres = [],
+        rects = [],
+        i = 0;
 
     for (i = 0; i < TOTAL_TORRES; i++) {
         torres.push(new Torre(i));
@@ -124,8 +121,14 @@ async function main(n, opt) {
         rects[i].moverPara(fn)
     }
 
+    for (i = 0; i < n; i++) {
+        rects.push(new Rect(i, {
+            velocidade : parseInt(opt.velocidade)
+        }));
+    }
+
     
-	async function todosOsRetangulosParaPrimeiraTorre(i, to) {
+    async function todosOsRetangulosParaPrimeiraTorre(i, to) {
         if (i < 0) {
             return;
 	    }
@@ -135,11 +138,47 @@ async function main(n, opt) {
             todosOsRetangulosParaPrimeiraTorre(i, torres[0]);
 	    });
 	}
-	
+        
     var indice = rects.length - 1;
 	await todosOsRetangulosParaPrimeiraTorre(indice, torres[0]);
+    start();
+
+
+    function start() {
+        var passos = [];
+        recursaoHanoi(n - 1, torres[0], torres[1], torres[2], function (prop) {
+            passos.push(prop);
+        });
+        var i = 0,
+        len = passos.length;
+        console.log(passos);
+        loop(i);
+
+        function loop(i){
+            if (i >= len) return;
+            mover(passos[i].indice, passos[i].to, function () {
+                i = i + 1;
+                loop(i);
+            });
+        }
+    }
+
+
+    function recursaoHanoi(n_rects, torre_1, torre_2, torre_3, fn){
+        if (n_rects === 0) {
+            fn({
+                indice : n_rects,
+                to : torre_3
+            });
+        } else {
+            recursaoHanoi(n_rects -1, torre_1, torre_3, torre_2, fn);
+            fn({
+                indice : n_rects,
+                to : torre_3
+            });
+            recursaoHanoi(n_rects-1, torre_2, torre_1, torre_3, fn);
+        }
+    }
 }
 
-$( document ).ready(function() {
-    main(5, {});
-});
+main(5, {velocidade : 500});
