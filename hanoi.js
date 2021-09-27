@@ -105,11 +105,12 @@ class Torre {
     }
 }
 
-function main(n, opt) {
+async function main(n, opt) {
     var rects = [];
     var torres = [];
+    var i = 0;
     const TOTAL_TORRES = 3;
-
+    
     for (i = 0; i < n; i++) {
         rects.push(new Rect(i, {}));
     }
@@ -118,9 +119,25 @@ function main(n, opt) {
         torres.push(new Torre(i));
     }
 
-    rects[0].to = torres[1];
-    rects[0].torre = torres[1];
-    rects[0].moverPara(()=>{return});
+    function mover(i, to, fn) {
+        rects[i].torre = to;
+        rects[i].moverPara(fn)
+    }
+
+    
+	async function todosOsRetangulosParaPrimeiraTorre(i, to) {
+        if (i < 0) {
+            return;
+	    }
+        
+	    mover(i, to, function () {
+            i = i - 1;
+            todosOsRetangulosParaPrimeiraTorre(i, torres[0]);
+	    });
+	}
+	
+    var indice = rects.length - 1;
+	await todosOsRetangulosParaPrimeiraTorre(indice, torres[0]);
 }
 
 $( document ).ready(function() {
