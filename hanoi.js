@@ -9,3 +9,14 @@ class Rect {
         this.torre = null;
     }
 }
+
+class Torre {
+    constructor() {
+        this.h = 100;
+        this.w = 50;
+        this.top = 200;
+        this.left = 200;
+        this.div = null;
+        this.rects = [];
+    }
+}
