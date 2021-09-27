@@ -106,7 +106,7 @@ class Torre {
     }
 }
 
-async function main(n, opt) {
+function main(n, opt) {
     const TOTAL_TORRES = 3;
     var torres = [],
         rects = [],
@@ -128,20 +128,25 @@ async function main(n, opt) {
     }
 
     
-    async function todosOsRetangulosParaPrimeiraTorre(i, to) {
-        if (i < 0) {
-            return;
-	    }
-        
-	    mover(i, to, function () {
-            i = i - 1;
-            todosOsRetangulosParaPrimeiraTorre(i, torres[0]);
-	    });
-	}
-        
     var indice = rects.length - 1;
-	await todosOsRetangulosParaPrimeiraTorre(indice, torres[0]);
-    start();
+    new Promise((resolve, reject) => {
+        todosOsRetangulosParaPrimeiraTorre(indice, torres[0]);
+
+        function todosOsRetangulosParaPrimeiraTorre(i, to) {
+            if (i < 0) {
+                resolve();
+                return;
+            }
+
+            mover(i, to, function () {
+                i = i - 1;
+                todosOsRetangulosParaPrimeiraTorre(i, torres[0]);
+            });
+        }
+
+    }).then(() => {
+        start();
+    });
 
 
     function start() {
