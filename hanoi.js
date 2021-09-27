@@ -1,9 +1,9 @@
 class Rect {
     constructor(indice, opt) {
         this.indice = indice;
-        this.minimo = 30;
-        this.passo = 15;
-        this.h = 15;
+        this.minimo = 20;
+        this.passo = 10;
+        this.h = 8;
         this.w = this.minimo + this.passo * this.indice;
         this.div = null;
         this.from = null;
@@ -17,15 +17,15 @@ class Rect {
         var opacidade = 0.3 + Math.random() * 0.7;
         this.div.css({
             position : "absolute",
-            backgroundColor : "#000",
+            backgroundColor : '#ffd233',
             opacidade : opacidade,
             width : this.w + "px",
             height : this.h + 'px',
             left : "100px",
-            top : 100 + this.indice * 10 + "px",
-            borderRadius : "2px",
+            top : 250 + this.indice * 10 + "px",
+            borderRadius : "7px",
             marginLeft : -(this.minimo + this.passo * this.indice) / 2 + "px",
-            borderBottom : "1px solid #ccc"
+            border : "1px solid black"
         });
         $(document.body).append(this.div);
     }
@@ -39,14 +39,14 @@ class Rect {
 class Torre {
     constructor(indice) {
         this.indice = indice;
-        this.h = 150;
-        this.w = 50;
-        this.top = 200;
-        this.left = 600;
+        this.h = 190;
+        this.w = 140;
+        this.top = 500;
+        this.left = 200;
         this.div = null;
         this.origem = {
             y : this.top + this.h,
-            x : this.left + this.indice * this.h + this.h,
+            x : this.left + this.indice * 3 * this.h + this.h,
         };
         this.rects = [];
         this.draw();
@@ -63,7 +63,8 @@ class Torre {
             width : 0,
             position : "absolute",
             left : this.origem.x + "px",
-            top : this.origem.y - this.h + "px"
+            top : this.origem.y - this.h + "px",
+            border : "1px solid black"
         });
         div2.css({
             position : "absolute",
@@ -71,7 +72,8 @@ class Torre {
             height : 0,
             borderBottom : "1px solid #aaa",
             bottom : 0,
-            left : (- this.w / 2) + 'px'
+            left : (- this.w / 2) + 'px',
+            border : "1px solid black"
         });
         div.append(div2);
         this.div = div;
@@ -186,4 +188,18 @@ function main(n, opt) {
     }
 }
 
-main(5, {velocidade : 500});
+var rodando = false;
+$("#btn").on("click", function () {
+    if (rodando) return;
+    rodando = true;
+    var velocidade = $("#velocidade").val();
+    var blocos = $("#input").val();
+    if (blocos > 20) {
+        alert("A partir de 20 blocos fica muito pesado, o programa foi limitado a 20")
+        blocos = 20;
+    } 
+    main(blocos, {
+        velocidade : velocidade
+    });
+
+});
