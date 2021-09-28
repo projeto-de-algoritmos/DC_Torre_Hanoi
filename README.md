@@ -22,7 +22,8 @@ Esse projeto tem como objetivo solucionar o problema das torres de hanói atrav�
 Fazer o clone do repositório e rodar o arquivo index.html em um navegador.
 
 ## Uso 
-Ao executar o arquivo html, o software permite escolher o número de placas e o tempo de execução da solução.
+Ao executar o arquivo html, o software permite escolher o número de placas e o tempo de execução da solução.<br>
+Para rodar novamente, atualize a página (F5).
 
 
 
