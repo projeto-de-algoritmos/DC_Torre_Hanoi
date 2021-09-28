@@ -14,9 +14,9 @@
 Esse projeto tem como objetivo solucionar o problema das torres de hanói através de um método recursivo que utiliza das premissas do paradigma de dividir e conquistar.
 
 ## Screenshots
-![](https://i.ibb.co/Wt5LDgD/Screenshot-124.png)
-![](https://i.ibb.co/J3RxmD6/Screenshot-125.png)
 ![](https://i.ibb.co/BrCqS4S/Screenshot-127.png)
+![](https://i.ibb.co/J3RxmD6/Screenshot-125.png)
+![](https://i.ibb.co/Nm09LGp/Screenshot-126.png)
 
 ## Instalação 
 Fazer o clone do repositório e rodar o arquivo index.html em um navegador.
